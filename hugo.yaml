@@ -1,0 +1,121 @@
+baseURL: "https://blog.nandakumar.online/"
+locale: "en-us"
+title: "0x4E — Nandakumar's Security Blog"
+theme: "PaperMod"
+
+paginate: 8
+
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+
+minify:
+  disableXML: true
+
+taxonomies:
+  category: categories
+  tag: tags
+  series: series
+
+params:
+  env: production
+  title: "0x4E — Nandakumar's Security Blog"
+  description: "Notes on red teaming, offensive security, and the road to a career in it."
+  keywords: [cybersecurity, red-team, offensive-security, blog]
+  author: "K.S Nandakumar"
+  defaultTheme: dark
+  disableThemeToggle: true
+  ShowShareButtons: false
+  ShowReadingTime: true
+  displayFullLangName: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowWordCount: true
+  ShowRssButtonInSectionTermList: true
+  ShowToc: true
+  TocOpen: false
+  comments: true
+
+  homeInfoParams:
+    Title: "whoami"
+    Content: >
+      Notes from an aspiring red teamer — labs, writeups, and things learned
+      the hard way while breaking (and fixing) things.
+
+  socialIcons:
+    - name: github
+      url: "https://github.com/NotKidding"
+
+  assets:
+    disableHLJS: true
+    disableFingerprinting: false
+
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    keys: ["title", "permalink", "summary", "content"]
+
+menu:
+  main:
+    - identifier: home
+      name: home
+      url: /
+      weight: 10
+    - identifier: posts
+      name: posts
+      url: /posts/
+      weight: 20
+    - identifier: tags
+      name: tags
+      url: /tags/
+      weight: 30
+    - identifier: search
+      name: search
+      url: /search/
+      weight: 40
+    - identifier: portfolio
+      name: portfolio
+      url: https://nandakumar.online/
+      weight: 50
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    noClasses: false
+    codeFences: true
+    guessSyntax: true
+    lineNos: false
+    style: monokai
+  tableOfContents:
+    endLevel: 3
+    ordered: false
+    startLevel: 2
+
+privacy:
+  vimeo:
+    disabled: false
+    simple: true
+  twitter:
+    disabled: false
+    enableDNT: true
+    simple: true
+  instagram:
+    disabled: false
+    simple: true
+  youtube:
+    disabled: false
+    privacyEnhanced: true

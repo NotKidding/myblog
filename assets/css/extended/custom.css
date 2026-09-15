@@ -1,0 +1,148 @@
+/* ==========================================================================
+   custom.css — reskins PaperMod to match the nandakumar.online portfolio.
+   Loaded after PaperMod's own stylesheet (see layouts/_partials/head.html),
+   so anything defined here overrides the theme without editing it directly.
+   Palette/fonts extracted verbatim from portfolio index.html :root block.
+   ========================================================================== */
+
+:root,
+:root[data-theme="dark"] {
+  /* --- raw portfolio palette, kept as named vars for reuse below --- */
+  --p-bg-deep: #07172e;
+  --p-bg-mid: #0b2147;
+  --p-bg-light: #103060;
+  --p-line: rgba(123, 181, 245, .18);
+  --p-line-strong: rgba(123, 181, 245, .35);
+  --p-cyan: #7bb5f5;
+  --p-cyan-soft: #a4ccf5;
+  --p-cyan-dim: rgba(164, 204, 245, .55);
+  --p-ink: #f6fdfe;
+  --p-muted: rgba(246, 253, 254, .62);
+  --p-warn: #f5c97b;
+  --p-green: #7bf5b5;
+  --p-sans: "Space Grotesk", system-ui, sans-serif;
+  --p-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  /* --- map onto PaperMod's own variable names (see theme-vars.css) --- */
+  --theme: var(--p-bg-deep);        /* page background */
+  --entry: var(--p-bg-mid);         /* card / post-entry background */
+  --primary: var(--p-ink);          /* headings, body text, links (via reset.css) */
+  --secondary: var(--p-cyan-soft);  /* meta text: dates, reading time */
+  --tertiary: var(--p-bg-light);    /* hover borders, tag chip backgrounds */
+  --content: var(--p-muted);        /* paragraph body copy */
+  --code-block-bg: var(--p-bg-mid);
+  --code-bg: var(--p-bg-light);
+  --border: var(--p-line);
+  --radius: 6px;                    /* portfolio uses 4-6px, not PaperMod's default 8px */
+  color-scheme: dark;
+}
+
+html {
+  background: var(--p-bg-deep);
+}
+
+body {
+  font-family: var(--p-sans);
+  background: var(--p-bg-deep);
+}
+
+/* Headings + nav/meta text: portfolio uses mono for small caps-y labels */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--p-sans);
+  letter-spacing: -.02em;
+}
+
+/* --- links: portfolio's signature cyan accent, not plain --primary --- */
+.post-content a,
+.entry-content a,
+.pagination a,
+footer a {
+  color: var(--p-cyan);
+  border-bottom: 1px solid var(--p-line-strong);
+}
+.post-content a:hover,
+.entry-content a:hover {
+  color: var(--p-cyan-soft);
+}
+
+/* --- header / nav bar: mono, glowing dot separators like the portfolio --- */
+.nav {
+  border-bottom: 1px solid var(--p-line);
+  background: linear-gradient(180deg, rgba(7, 23, 46, .85) 0%, rgba(7, 23, 46, .55) 100%);
+  backdrop-filter: blur(10px) saturate(140%);
+}
+.nav a {
+  font-family: var(--p-mono);
+  letter-spacing: .12em;
+  font-size: 13px;
+}
+.logo a {
+  color: var(--p-cyan-soft);
+}
+
+/* --- post cards: glass panel + left accent bar, echoing the portfolio's .stat cards --- */
+.post-entry {
+  background: linear-gradient(180deg, rgba(11, 33, 71, .55) 0%, rgba(7, 23, 46, .55) 100%);
+  border: 1px solid var(--p-line);
+  border-left: 2px solid var(--p-cyan);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .02) inset;
+}
+.post-entry:hover,
+.post-entry:focus-within {
+  border-color: var(--p-line-strong);
+  border-left-color: var(--p-cyan-soft);
+}
+.entry-header h2 {
+  font-family: var(--p-sans);
+}
+
+/* --- meta rows (date · reading time · tags) --- */
+.post-meta {
+  font-family: var(--p-mono);
+  color: var(--p-cyan-dim);
+  font-size: 12px;
+  letter-spacing: .05em;
+}
+
+/* --- tag chips --- */
+ul.terms-tags li a,
+.entry-content .tags a {
+  border: 1px solid var(--p-line-strong);
+  background: rgba(123, 181, 245, .06);
+  color: var(--p-cyan);
+  font-family: var(--p-mono);
+  border-radius: 999px;
+}
+
+/* --- code blocks: same terminal-card treatment as the portfolio's .term --- */
+.post-content pre,
+.highlight {
+  background: var(--p-bg-mid) !important;
+  border: 1px solid var(--p-line-strong);
+  border-radius: 6px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .4), inset 0 0 0 1px rgba(255, 255, 255, .02);
+}
+.post-content code,
+.post-content pre,
+.copy-code {
+  font-family: var(--p-mono);
+}
+
+/* --- buttons / top-scroll / search --- */
+#top-link,
+.search-icon {
+  background: var(--p-bg-mid);
+  border: 1px solid var(--p-line-strong);
+}
+.search-icon svg,
+#top-link svg {
+  stroke: var(--p-cyan);
+}
+
+/* --- footer --- */
+.footer {
+  border-top: 1px solid var(--p-line);
+  color: var(--p-cyan-dim);
+  font-family: var(--p-mono);
+  font-size: 12px;
+}
