@@ -2,7 +2,6 @@
 title: "Hello World!"
 date: 2026-09-15T06:53:22Z
 draft: false
-tags: ["meta"]
 tags: ["meta", "Writeup", "Security Blog", "OffSec"]
 summary: "First post — why this blog exists and how it's built."
 showToc: true
