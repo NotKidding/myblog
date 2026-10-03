@@ -1,5 +1,5 @@
 ---
-title: "Hello World"
+title: "Hello World!"
 date: 2026-09-15T06:53:22Z
 draft: false
 tags: ["meta"]
