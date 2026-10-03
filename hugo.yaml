@@ -14,7 +14,6 @@ minify:
   disableXML: true
 
 taxonomies:
-  category: categories
   tag: tags
   series: series
 
@@ -67,22 +66,30 @@ menu:
       name: home
       url: /
       weight: 10
-    - identifier: posts
-      name: posts
-      url: /posts/
+    - identifier: writeups
+      name: writeups
+      url: /tags/writeup/
       weight: 20
-    - identifier: tags
-      name: tags
-      url: /tags/
+    - identifier: security-blog
+      name: security blog
+      url: /tags/security-blog/
       weight: 30
+    - identifier: offsec
+      name: offsec
+      url: /tags/offsec/
+      weight: 40
+    - identifier: tags
+      name: all tags
+      url: /tags/
+      weight: 50
     - identifier: search
       name: search
       url: /search/
-      weight: 40
+      weight: 60
     - identifier: portfolio
       name: portfolio
       url: https://nandakumar.online/
-      weight: 50
+      weight: 70
 
 outputs:
   home:
