@@ -502,3 +502,68 @@ footer .end .dot{ width:6px; height:6px; border-radius:50%; background:var(--gre
 .codeblock pre.chroma {
   border: 0; border-radius: 0; background: transparent;
 }
+
+/* ==========================================================================
+   Search page — PaperMod supplies the #searchbox/#searchInput/#searchResults
+   markup and the fastsearch.js behavior (IDs must stay exactly as PaperMod
+   expects them, or the search JS silently stops working). Everything below
+   is purely visual, restyling PaperMod's defaults onto our own palette —
+   without this, the search box inherits PaperMod's dark-mode colors, which
+   are dark-gray-on-dark-navy and nearly invisible against our background.
+   ========================================================================== */
+.searchbox {
+  margin-top: 6px;
+}
+.searchbox input#searchInput {
+  width: 100%;
+  background: var(--bg-mid);
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 15px;
+  padding: 12px 16px;
+  outline: none;
+  transition: border-color .15s ease;
+}
+.searchbox input#searchInput::placeholder {
+  color: var(--cyan-dim);
+}
+.searchbox input#searchInput:focus {
+  border-color: var(--cyan);
+}
+.searchbox input#searchInput:disabled {
+  opacity: .5;
+}
+.searchResults {
+  margin: 20px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.searchResults li {
+  list-style: none;
+  background: linear-gradient(180deg, rgba(11,33,71,.55) 0%, rgba(7,23,46,.55) 100%);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--cyan);
+  border-radius: 6px;
+  padding: 14px 16px;
+  transition: border-color .15s ease, transform .15s ease;
+}
+.searchResults li:hover,
+.searchResults li:focus-within {
+  border-color: var(--line-strong);
+  transform: translateY(-2px);
+}
+.searchResults li a {
+  color: var(--ink);
+  font-weight: 500;
+  text-decoration: none;
+}
+.searchResults mark {
+  background: rgba(123,181,245,.25);
+  color: var(--cyan-soft);
+  border-radius: 2px;
+  padding: 0 2px;
+}
