@@ -1,0 +1,74 @@
+{{ define "main" }}
+{{- $posts := where site.RegularPages "Type" "posts" }}
+{{- $posts = $posts.ByDate.Reverse }}
+{{- $tagCounts := slice }}
+{{- range $tag, $pages := site.Taxonomies.tags }}
+  {{- $termPage := site.GetPage (printf "/tags/%s" $tag) }}
+  {{- $label := $tag }}
+  {{- with $termPage }}{{ $label = .Title }}{{ end }}
+  {{- $tagCounts = $tagCounts | append (dict "tag" $tag "label" $label "count" (len $pages)) }}
+{{- end }}
+{{- $tagCounts = sort $tagCounts "count" "desc" }}
+
+<header class="page-head shell">
+  <div class="reveal">
+    <div class="h-eyebrow"><span class="blink"></span>NOTES FROM THE LAB</div>
+    <h1 class="page-title">field <span class="accent">notes</span>.</h1>
+    <p class="lede">
+      Write-ups, teardowns and half-finished thoughts on
+      <em>red teaming &amp; offensive security</em> — what I broke, how it broke,
+      and what I'd do differently next time.
+    </p>
+  </div>
+</header>
+
+<section class="shell">
+  <div class="sec-head reveal">
+    <div class="n">// LOG</div>
+    <div class="title">all entries.</div>
+    <div class="sub">{{ len $posts }} POST{{ if ne (len $posts) 1 }}S{{ end }}&nbsp;//&nbsp;{{ len $tagCounts }} TAG{{ if ne (len $tagCounts) 1 }}S{{ end }}</div>
+  </div>
+
+  {{- if gt (len $tagCounts) 0 }}
+  <div class="filterbar reveal">
+    <span class="lbl">// FILTER</span>
+    <button class="tagbtn" type="button" data-tag="*" aria-pressed="true">ALL<span class="ct">{{ len $posts }}</span></button>
+    {{- range $tagCounts }}
+    <button class="tagbtn" type="button" data-tag="{{ .tag }}" aria-pressed="false">{{ .label }}<span class="ct">{{ .count }}</span></button>
+    {{- end }}
+  </div>
+  {{- end }}
+
+  {{- if gt (len $posts) 0 }}
+  <div class="postlist">
+    {{- range $posts }}
+    {{- $tagList := .Params.tags | default slice }}
+    {{- $tagSlugs := slice }}
+    {{- range $tagList }}{{ $tagSlugs = $tagSlugs | append (. | urlize) }}{{ end }}
+    {{- $mins := math.Round (div (countwords .Content) 220.0) }}
+    {{- if lt $mins 1.0 }}{{ $mins = 1.0 }}{{ end }}
+    <a class="post-row reveal" href="{{ .RelPermalink }}" data-tags="{{ delimit $tagSlugs "," }}">
+      <div class="rail">
+        <span class="date">{{ .Date.Format "02 Jan 2006" | upper }}</span>
+        <span class="read">{{ printf "%.0f" $mins }} MIN READ</span>
+      </div>
+      <div>
+        <h2>{{ .Title }}{{ if .Draft }}<span class="draft-flag">DRAFT</span>{{ end }}</h2>
+        {{- with .Params.summary }}<p class="excerpt">{{ . }}</p>{{ end }}
+        {{- if $tagList }}<div class="tags">{{ range $tagList }}<span>{{ . }}</span>{{ end }}</div>{{ end }}
+      </div>
+    </a>
+    {{- end }}
+  </div>
+  <div class="empty filter-empty" hidden>// no posts match that tag</div>
+  {{- else }}
+  <div class="empty">
+    <div><span class="hl">no posts yet</span></div>
+    <div style="margin-top:10px;opacity:.75;">
+      drop a markdown file into <span class="hl">content/posts/</span> and run
+      <span class="hl">hugo new posts/my-post.md</span>
+    </div>
+  </div>
+  {{- end }}
+</section>
+{{ end }}

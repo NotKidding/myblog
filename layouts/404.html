@@ -1,0 +1,16 @@
+{{ define "main" }}
+<header class="page-head shell">
+  <div class="reveal">
+    <div class="h-eyebrow"><span class="blink" style="background:var(--red)"></span>STATUS 404</div>
+    <h1 class="page-title">dead <span class="accent">drop</span>.</h1>
+    <p class="lede">That path doesn't resolve to anything. The page may have moved, or it never existed.</p>
+    <div class="term">
+      <div><span class="prompt">$</span> curl -I $REQUESTED_PATH</div>
+      <div class="out"><span class="err">HTTP/2 404</span> — no such resource</div>
+      <div><span class="prompt">$</span> ls /</div>
+      <div class="out"><a href="{{ "/" | relLangURL }}" style="color:var(--cyan)">posts/</a> &nbsp; <a href="{{ "/tags/" | relLangURL }}" style="color:var(--cyan)">tags/</a> &nbsp; <a href="{{ "index.xml" | relLangURL }}" style="color:var(--cyan)">feed.xml</a></div>
+      <div><span class="prompt">$</span> <span class="ok">_</span></div>
+    </div>
+  </div>
+</header>
+{{ end }}

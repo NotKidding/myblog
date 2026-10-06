@@ -1,0 +1,40 @@
+{{- $current := .RelPermalink }}
+{{- $bestLen := -1 }}
+{{- $bestURL := "" }}
+{{- $hasPortfolio := false }}
+{{- $hasRSS := false }}
+{{- range site.Menus.main }}
+  {{- if eq .Identifier "portfolio" }}{{ $hasPortfolio = true }}{{ end }}
+  {{- if eq .Identifier "rss" }}{{ $hasRSS = true }}{{ end }}
+{{- end }}
+{{- range site.Menus.main }}
+  {{- $match := false }}
+  {{- if eq .URL "/" }}
+    {{- if eq $current "/" }}{{ $match = true }}{{ end }}
+  {{- else if hasPrefix $current .URL }}
+    {{- $match = true }}
+  {{- end }}
+  {{- if and $match (gt (len .URL) $bestLen) }}
+    {{- $bestLen = len .URL }}{{ $bestURL = .URL }}
+  {{- end }}
+{{- end }}
+<nav class="top">
+  <div class="shell row">
+    <a class="brand" href="{{ "/" | relLangURL }}">
+      <span class="dot"></span>
+      <span class="brand-full">K.S_NANDAKUMAR&nbsp;//&nbsp;BLOG</span>
+      <span class="brand-short">K.S_N&nbsp;//&nbsp;BLOG</span>
+    </a>
+    <div class="navlinks">
+      {{- range site.Menus.main }}
+      <a href="{{ .URL }}"{{ if eq .URL $bestURL }} class="active"{{ end }}>{{ .Name | upper }}</a>
+      {{- end }}
+      {{- if not $hasRSS }}
+      <a href="{{ "index.xml" | relLangURL }}">RSS</a>
+      {{- end }}
+      {{- if not $hasPortfolio }}
+      <a href="{{ site.Params.portfolio }}" class="ext">PORTFOLIO</a>
+      {{- end }}
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,69 @@
+{{ define "main" }}
+{{- $posts := where site.RegularPages "Type" "posts" }}
+{{- $posts = $posts.ByDate.Reverse }}
+{{- $index := -1 }}
+{{- range $i, $p := $posts }}{{ if eq $p.RelPermalink $.RelPermalink }}{{ $index = $i }}{{ end }}{{ end }}
+{{- $newer := "" }}{{- $older := "" }}
+{{- if gt $index 0 }}{{ $newer = index $posts (sub $index 1) }}{{ end }}
+{{- if lt (add $index 1) (len $posts) }}{{ $older = index $posts (add $index 1) }}{{ end }}
+
+{{- $tagList := .Params.tags | default slice }}
+{{- $mins := math.Round (div (countwords .Content) 220.0) }}
+{{- if lt $mins 1.0 }}{{ $mins = 1.0 }}{{ end }}
+{{- $toc := findRE "<h[2-3] id=\"[^\"]*\"" .Content }}
+
+<div class="progress" aria-hidden="true"></div>
+
+<article>
+  <header class="art-head shell">
+    <div class="reveal">
+      <div class="art-meta">
+        <span class="date">{{ .Date.Format "02 Jan 2006" | upper }}</span>
+        <span class="sep">//</span>
+        <span>{{ printf "%.0f" $mins }} MIN READ</span>
+        {{- if .Draft }}<span class="sep">//</span><span style="color:var(--warn)">DRAFT</span>{{ end }}
+      </div>
+      <h1>{{ .Title }}</h1>
+      {{- with .Params.summary }}<p class="summary">{{ . }}</p>{{ end }}
+      {{- if $tagList }}
+      <div class="tags">
+        {{- range $tagList }}<a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/">{{ . }}</a>{{ end }}
+      </div>
+      {{- end }}
+      {{- if .Draft }}<div class="draft-banner">// UNPUBLISHED DRAFT — not listed in the index or feed</div>{{ end }}
+    </div>
+  </header>
+
+  <div class="shell article-wrap">
+    <div class="prose reveal">
+      {{ .Content }}
+    </div>
+    {{- if ge (len $toc) 3 }}
+    <aside class="toc reveal">
+      <div class="toc-t">// ON THIS PAGE</div>
+      {{ .TableOfContents }}
+    </aside>
+    {{- end }}
+  </div>
+
+  <div class="shell">
+    <div class="art-foot">
+      <div class="share">
+        <span class="lbl">// SHARE</span>
+        <a href="https://twitter.com/intent/tweet?text={{ .Title | urlquery }}&url={{ .Permalink | urlquery }}" target="_blank" rel="noopener">X / TWITTER</a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ .Permalink | urlquery }}" target="_blank" rel="noopener">LINKEDIN</a>
+        <button id="copy-link" type="button" data-url="{{ .Permalink }}"><span>COPY LINK</span></button>
+      </div>
+
+      <div class="prevnext">
+        {{- if $newer }}
+        <a class="pn prev" href="{{ $newer.RelPermalink }}"><div class="dir">← NEWER</div><div class="t">{{ $newer.Title }}</div></a>
+        {{- else }}<div></div>{{- end }}
+        {{- if $older }}
+        <a class="pn next" href="{{ $older.RelPermalink }}"><div class="dir">OLDER →</div><div class="t">{{ $older.Title }}</div></a>
+        {{- else }}<div></div>{{- end }}
+      </div>
+    </div>
+  </div>
+</article>
+{{ end }}

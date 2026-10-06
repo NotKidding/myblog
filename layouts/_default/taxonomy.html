@@ -1,0 +1,77 @@
+{{ define "main" }}
+{{- if eq .Kind "term" }}
+
+{{- $posts := .Pages.ByDate.Reverse }}
+<header class="page-head shell">
+  <div class="reveal">
+    <div class="h-eyebrow"><span class="blink"></span>TAG</div>
+    <h1 class="page-title"><span class="accent">#</span>{{ .Title }}</h1>
+    <p class="lede">{{ len $posts }} post{{ if ne (len $posts) 1 }}s{{ end }} tagged <em>{{ .Title }}</em>.</p>
+  </div>
+</header>
+
+<section class="shell">
+  <div class="sec-head reveal">
+    <div class="n">// FILTERED</div>
+    <div class="title">{{ .Title }}.</div>
+    <div class="sub"><a href="{{ "/tags/" | relLangURL }}">← ALL TAGS</a></div>
+  </div>
+  <div class="postlist">
+    {{- range $posts }}
+    {{- $tagList := .Params.tags | default slice }}
+    {{- $tagSlugs := slice }}
+    {{- range $tagList }}{{ $tagSlugs = $tagSlugs | append (. | urlize) }}{{ end }}
+    {{- $mins := math.Round (div (countwords .Content) 220.0) }}
+    {{- if lt $mins 1.0 }}{{ $mins = 1.0 }}{{ end }}
+    <a class="post-row reveal" href="{{ .RelPermalink }}" data-tags="{{ delimit $tagSlugs "," }}">
+      <div class="rail">
+        <span class="date">{{ .Date.Format "02 Jan 2006" | upper }}</span>
+        <span class="read">{{ printf "%.0f" $mins }} MIN READ</span>
+      </div>
+      <div>
+        <h2>{{ .Title }}{{ if .Draft }}<span class="draft-flag">DRAFT</span>{{ end }}</h2>
+        {{- with .Params.summary }}<p class="excerpt">{{ . }}</p>{{ end }}
+        {{- if $tagList }}<div class="tags">{{ range $tagList }}<span>{{ . }}</span>{{ end }}</div>{{ end }}
+      </div>
+    </a>
+    {{- end }}
+  </div>
+</section>
+
+{{- else }}
+
+{{- $tagCounts := slice }}
+{{- range $tag, $pages := site.Taxonomies.tags }}
+  {{- $termPage := site.GetPage (printf "/tags/%s" $tag) }}
+  {{- $label := $tag }}
+  {{- with $termPage }}{{ $label = .Title }}{{ end }}
+  {{- $tagCounts = $tagCounts | append (dict "tag" $tag "label" $label "count" (len $pages)) }}
+{{- end }}
+{{- $tagCounts = sort $tagCounts "count" "desc" }}
+
+<header class="page-head shell">
+  <div class="reveal">
+    <div class="h-eyebrow"><span class="blink"></span>INDEX</div>
+    <h1 class="page-title">by <span class="accent">tag</span>.</h1>
+    <p class="lede">Every topic covered so far, ordered by how much has been written about it.</p>
+  </div>
+</header>
+
+<section class="shell">
+  <div class="sec-head reveal">
+    <div class="n">// TAGS</div>
+    <div class="title">{{ len $tagCounts }} topic{{ if ne (len $tagCounts) 1 }}s{{ end }}.</div>
+  </div>
+  {{- if gt (len $tagCounts) 0 }}
+  <div class="filterbar reveal">
+    {{- range $tagCounts }}
+    <a class="tagbtn" href="{{ "/tags/" | relLangURL }}{{ .tag | urlize }}/">{{ .label }}<span class="ct">{{ .count }}</span></a>
+    {{- end }}
+  </div>
+  {{- else }}
+  <div class="empty">// no tags yet</div>
+  {{- end }}
+</section>
+
+{{- end }}
+{{ end }}

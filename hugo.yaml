@@ -15,7 +15,6 @@ minify:
 
 taxonomies:
   tag: tags
-  series: series
 
 params:
   env: production
@@ -23,6 +22,8 @@ params:
   description: "Notes on red teaming, offensive security, and the road to a career in it."
   keywords: [cybersecurity, red-team, offensive-security, blog]
   author: "K.S Nandakumar"
+  portfolio: "https://nandakumar.online"
+  github: "https://github.com/NotKidding"
   defaultTheme: dark
   disableThemeToggle: true
   ShowShareButtons: false

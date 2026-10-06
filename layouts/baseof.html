@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="{{ site.Language.Lang | default "en" }}" data-theme="dark">
+<head>
+{{- partial "head.html" . }}
+</head>
+<body id="top">
+{{- partial "ambient.html" . }}
+{{- partial "topnav.html" . }}
+{{- block "main" . }}{{ end }}
+{{- partial "sitefooter.html" . }}
+<script src="{{ "js/main.js" | relURL }}" defer></script>
+</body>
+</html>

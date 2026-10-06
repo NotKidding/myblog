@@ -1,0 +1,9 @@
+{{- $result := transform.HighlightCodeBlock . }}
+<div class="codeblock">
+  <div class="cb-bar">
+    <span class="b r"></span><span class="b y"></span><span class="b g"></span>
+    <span class="cb-lang">{{ .Type | default "text" }}</span>
+    <button class="cb-copy" type="button">COPY</button>
+  </div>
+  {{ $result.Wrapped }}
+</div>
