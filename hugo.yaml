@@ -50,6 +50,11 @@ params:
   assets:
     disableHLJS: true
     disableFingerprinting: false
+    favicon: "favicon-v2.ico"
+    favicon16x16: "favicon-16x16-v2.png"
+    favicon32x32: "favicon-32x32-v2.png"
+    apple_touch_icon: "apple-touch-icon-v2.png"
+    safari_pinned_tab: "safari-pinned-tab-v2.svg"
 
   fuseOpts:
     isCaseSensitive: false
